@@ -1,0 +1,25 @@
+Leet
+
+class Solution {
+    public int maximumBeauty(int[] nums, int k) {
+         TreeMap<Integer, Integer> map = new TreeMap<>();
+
+        // Add range boundaries for each nums[i]
+        for (int num : nums) {
+            int start = num - k;
+            int end = num + k + 1; // +1 to handle range [start, end) during sweep
+            map.put(start, map.getOrDefault(start, 0) + 1);
+            map.put(end, map.getOrDefault(end, 0) - 1);
+        }
+
+        // Sweep line to calculate the maximum overlap
+        int currentOverlap = 0;
+        int maxBeauty = 0;
+        for (int key : map.keySet()) {
+            currentOverlap += map.get(key); // Update current overlap
+            maxBeauty = Math.max(maxBeauty, currentOverlap); // Update maximum beauty
+        }
+
+        return maxBeauty;
+    }
+}
